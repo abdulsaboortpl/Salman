@@ -1,0 +1,56 @@
+# =============================================================================
+# Local development — build images from source
+# Usage: docker compose -f docker-compose.build.yml up --build
+# =============================================================================
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: auth-sqlserver-dev
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${DB_PASSWORD:-YourStrong@Passw0rd}
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqldata-dev:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "grep -q 'SQL Server is now ready' /var/opt/mssql/log/errorlog || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 30s
+
+  api:
+    build:
+      context: ./API
+      dockerfile: Dockerfile
+    container_name: auth-api-dev
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      DisableHttpsRedirection: "true"
+      EnableSwagger: "true"
+      ConnectionStrings__DefaultConnection: "Server=sqlserver;Database=AuthDb;User Id=sa;Password=${DB_PASSWORD:-YourStrong@Passw0rd};TrustServerCertificate=True;MultipleActiveResultSets=true"
+      JwtSettings__Secret: ${JWT_SECRET:-YourSuperSecretKeyForJWT_MustBeAtLeast32Characters!}
+      Cors__AllowedOrigins__0: "http://localhost"
+      Cors__AllowedOrigins__1: "http://localhost:8080"
+    ports:
+      - "5000:8080"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: /api
+    container_name: auth-frontend-dev
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+
+volumes:
+  sqldata-dev:

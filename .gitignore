@@ -1,0 +1,24 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+
+# User-specific files
+*.user
+*.suo
+.vs/
+
+# Environment & secrets
+.env
+.env.local
+deploy/.env
+appsettings.*.local.json
+
+# Node
+node_modules/
+dist/
+
+# IDE
+.idea/
+.vscode/
