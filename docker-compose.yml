@@ -20,7 +20,7 @@ services:
       ASPNETCORE_ENVIRONMENT: Production
       DisableHttpsRedirection: "true"
       EnableSwagger: ${ENABLE_SWAGGER:-false}
-      ConnectionStrings__DefaultConnection: "Server=${DB_HOST:-host.docker.internal},${DB_PORT:-1433};Database=${DB_NAME:-SalmanDB};User Id=${DB_USER:-sa};Password=${DB_PASSWORD};TrustServerCertificate=True;MultipleActiveResultSets=true;Encrypt=False"
+      ConnectionStrings__DefaultConnection: "Server=${DB_HOST:-host.docker.internal},${DB_PORT:-1433};Database=${DB_NAME:-SalmanDB};User Id=${DB_USER:-sa};Password=${DB_PASSWORD:-Salman@StrongPass123};TrustServerCertificate=True;MultipleActiveResultSets=true;Encrypt=False"
       JwtSettings__Secret: ${JWT_SECRET}
       JwtSettings__Issuer: ${JWT_ISSUER:-AuthAPI}
       JwtSettings__Audience: ${JWT_AUDIENCE:-AuthAPIClient}
