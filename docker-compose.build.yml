@@ -1,5 +1,6 @@
 # =============================================================================
-# Local development — build images from source
+# LOCAL DEVELOPMENT ONLY — build images from source on your machine
+# DO NOT use this file on VPS. Use docker-compose.yml instead.
 # Usage: docker compose -f docker-compose.build.yml up --build
 # =============================================================================
 

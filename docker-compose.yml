@@ -1,8 +1,15 @@
 # =============================================================================
-# VPS Deployment — uses SQL Server on the VPS host (localhost:1433)
+# PRODUCTION — VPS deployment (pull pre-built images from GHCR)
 # =============================================================================
-# Prefer using ../docker-compose.yml at repo root for VPS panels.
-# This file is identical for manual deploy from the deploy/ folder.
+# VPS panels usually run: docker compose pull && docker compose up -d
+# Copy .env.example to .env and edit before first deploy.
+#
+# Images (built by GitHub Actions):
+#   ghcr.io/abdulsaboortpl/auth-api:latest
+#   ghcr.io/abdulsaboortpl/auth-frontend:latest
+#
+# SQL Server runs on the VPS host (localhost:1433), NOT in Docker.
+# Database: SalmanDB — migrations run automatically on API startup.
 # =============================================================================
 
 services:
