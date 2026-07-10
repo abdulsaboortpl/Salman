@@ -210,7 +210,7 @@ Located in `API/appsettings.json`:
 Build and run all services locally from source:
 
 ```bash
-docker compose -f docker-compose.build.yml up --build
+docker compose -f docker-compose.dev.yml up --build
 ```
 
 | Service  | URL |
@@ -315,7 +315,12 @@ JWT_SECRET=YourSuperSecretKeyForJWT_MustBeAtLeast32Characters!
 
 ### 4. Pull images and start
 
+**Important:** Use `docker-compose.yml` (production). Do **NOT** use `docker-compose.dev.yml` on VPS.
+
 ```bash
+cp .env.example .env
+nano .env
+
 docker login ghcr.io   # only if packages are private
 docker compose pull
 docker compose up -d
